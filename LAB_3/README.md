@@ -25,7 +25,7 @@
 mkdir -p ~/ansible-caddy-lab
 cd ~/ansible-caddy-lab
 ```
-(3)
+![1](https://github.com/Tran16062002/CNSA_LAB/blob/main/LAB_3/images/3.png)
 ### 2.2. Установка Python и создание виртуального окружения
 
 Установка необходимых компонентов:
@@ -46,7 +46,7 @@ python3 -m venv .venv
 ```bash
 source .venv/bin/activate
 ```
-(4)
+![1](https://github.com/Tran16062002/CNSA_LAB/blob/main/LAB_3/images/4.png)
 ### 2.3. Установка Ansible
 
 Установка Ansible в виртуальное окружение:
@@ -54,7 +54,7 @@ source .venv/bin/activate
 ```bash
 python -m pip install ansible
 ```
-(5)
+![1](https://github.com/Tran16062002/CNSA_LAB/blob/main/LAB_3/images/5.png)
 
 Проверка установки:
 
@@ -102,7 +102,7 @@ local_server ansible_host=localhost
 ```bash
 ansible my_servers -m ping -c local
 ```
-(9)
+![1](https://github.com/Tran16062002/CNSA_LAB/blob/main/LAB_3/images/9.png)
 
 Успешное выполнение команды подтверждает, что Ansible может взаимодействовать с настроенным узлом.
 
@@ -114,10 +114,10 @@ ansible my_servers -m ping -c local
 Дополнительно требуется изменить содержимое созданного файла перед его удалением.
 
 ### 4.1. Создание и удаление файла
-(10)
-(11)
-(12)
-(13)
+![1](https://github.com/Tran16062002/CNSA_LAB/blob/main/LAB_3/images/10.png)
+![1](https://github.com/Tran16062002/CNSA_LAB/blob/main/LAB_3/images/11.png)
+![1](https://github.com/Tran16062002/CNSA_LAB/blob/main/LAB_3/images/12.png)
+![1](https://github.com/Tran16062002/CNSA_LAB/blob/main/LAB_3/images/13.png)
 ### 4.2. Создание Playbook
 
 Был создан файл `file_operations.yml`.
@@ -139,7 +139,7 @@ Playbook выполняет следующие действия:
 ```bash
 ansible-playbook file_operations.yml
 ```
-(14)
+![1](https://github.com/Tran16062002/CNSA_LAB/blob/main/LAB_3/images/14.png)
 ### 4.3. Результат выполнения
 
 В результате выполнения Playbook были успешно выполнены все операции с файлом.
@@ -147,7 +147,7 @@ ansible-playbook file_operations.yml
 
 Проверки содержимого завершились успешно, после чего файл `test.txt` был удален.
 
-(15)
+![1](https://github.com/Tran16062002/CNSA_LAB/blob/main/LAB_3/images/15.png)
 
 ## 5. Выполнение задания 2. Создание Role для установки Caddy
 
@@ -160,7 +160,7 @@ ansible-playbook file_operations.yml
 ```bash
 ansible-galaxy init roles/caddy_deploy
 ```
-(16)
+![1](https://github.com/Tran16062002/CNSA_LAB/blob/main/LAB_3/images/16.png)
 
 Основные файлы проекта:
 
@@ -182,7 +182,7 @@ ansible-caddy-lab/
         └── vars/
             └── main.yml
 ```
-(17)
+![1](https://github.com/Tran16062002/CNSA_LAB/blob/main/LAB_3/images/17.png)
 ### 5.2. Настройка переменных Role
 
 В файле `roles/caddy_deploy/vars/main.yml` определены переменные:
@@ -253,13 +253,15 @@ ansible-playbook --syntax-check caddy_deploy.yml
 ```bash
 ansible-playbook caddy_deploy.yml --ask-become-pass
 ```
-(18)
+![1](https://github.com/Tran16062002/CNSA_LAB/blob/main/LAB_3/images/18.png)
 
 Параметр `--ask-become-pass` используется для ввода пароля sudo.
 
-(19)
-(20)
-(21)
+![1](https://github.com/Tran16062002/CNSA_LAB/blob/main/LAB_3/images/19.png)
+
+![1](https://github.com/Tran16062002/CNSA_LAB/blob/main/LAB_3/images/20.png)
+
+![1](https://github.com/Tran16062002/CNSA_LAB/blob/main/LAB_3/images/21.png)
 
 ## 6. Выполнение дополнительного задания (вариант 2a)
 
@@ -295,31 +297,6 @@ ansible-playbook caddy_deploy.yml --ask-become-pass
 Для автоматической генерации конфигурации был создан шаблон:
 
 `roles/caddy_deploy/templates/Caddyfile.j2`
-
-Содержимое шаблона:
-
-```caddyfile
-{{ site_address }} {
-
-    root * {{ web_root }}
-
-    encode gzip zstd
-
-    header {
-        X-Content-Type-Options "nosniff"
-        X-Frame-Options "DENY"
-        Referrer-Policy "strict-origin-when-cross-origin"
-    }
-
-    log {
-        output file {{ log.file }}
-        format json
-        level {{ log.level }}
-    }
-
-    file_server
-}
-```
 
 В конфигурации реализованы следующие функции:
 
@@ -365,7 +342,7 @@ sudo systemctl status caddy
 curl http://localhost:8080
 ```
 
-(24)
+![1](https://github.com/Tran16062002/CNSA_LAB/blob/main/LAB_3/images/24.png)
 
 В ответ сервер вернул HTML-код собственной страницы, содержащей заголовок:
 
@@ -385,7 +362,7 @@ curl -I http://localhost:8080
 
 Полученный ответ содержал:
 
-(26)
+![1](https://github.com/Tran16062002/CNSA_LAB/blob/main/LAB_3/images/26.png)
 
 Код `200 OK` подтверждает успешную обработку HTTP-запроса.
 
@@ -421,7 +398,7 @@ sudo tail -n 20 /var/log/caddy/access.log
 
 **http://localhost:8080**
 
-(25)
+![1](https://github.com/Tran16062002/CNSA_LAB/blob/main/LAB_3/images/25.png)
 
 ## 9. Заключение
 
@@ -432,5 +409,3 @@ sudo tail -n 20 /var/log/caddy/access.log
 Выполнение дополнительного задания (вариант 2a) позволило расширить стандартную конфигурацию Caddy, добавить HTTP-заголовки безопасности, настроить журналирование и автоматизировать развертывание собственной HTML-страницы.
 
 Поставленная цель лабораторной работы достигнута. Все основные задачи были выполнены и проверены.
-
-**Примечание:** веб-сервер развернут локально в Ubuntu WSL2 и доступен по HTTP на `localhost:8080`. Публичный HTTPS-доступ в рамках данной реализации не настраивался.
