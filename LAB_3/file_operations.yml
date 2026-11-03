@@ -1,0 +1,52 @@
+---
+- name: File operations using Ansible Playbook
+  hosts: my_servers
+  connection: local
+
+  tasks:
+    - name: Create a text file
+      ansible.builtin.copy:
+        content: "This is the original file content."
+        dest: "{{ ansible_facts['env']['HOME'] }}/test.txt"
+        mode: "0644"
+
+    - name: Read the original file content
+      ansible.builtin.command:
+        cmd: cat "{{ ansible_facts['env']['HOME'] }}/test.txt"
+      register: original_content
+      changed_when: false
+
+    - name: Display the original content
+      ansible.builtin.debug:
+        msg: "{{ original_content.stdout }}"
+
+    - name: Verify the original content
+      ansible.builtin.assert:
+        that:
+          - original_content.stdout == "This is the original file content."
+
+    - name: Change the file content
+      ansible.builtin.copy:
+        content: "This is the modified file content."
+        dest: "{{ ansible_facts['env']['HOME'] }}/test.txt"
+        mode: "0644"
+
+    - name: Read the modified file content
+      ansible.builtin.command:
+        cmd: cat "{{ ansible_facts['env']['HOME'] }}/test.txt"
+      register: modified_content
+      changed_when: false
+
+    - name: Display the modified content
+      ansible.builtin.debug:
+        msg: "{{ modified_content.stdout }}"
+
+    - name: Verify the modified content
+      ansible.builtin.assert:
+        that:
+          - modified_content.stdout == "This is the modified file content."
+
+    - name: Delete the text file
+      ansible.builtin.file:
+        path: "{{ ansible_facts['env']['HOME'] }}/test.txt"
+        state: absent
