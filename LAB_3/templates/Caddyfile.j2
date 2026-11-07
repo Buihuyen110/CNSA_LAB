@@ -1,0 +1,24 @@
+{{ site_address }} {
+
+    root * {{ web_root }}
+
+    encode gzip zstd
+
+    # Additional HTTP Security Headers
+    header {
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        Referrer-Policy "strict-origin-when-cross-origin"
+    }
+
+    # Access logging
+    log {
+        output file {{ log.file }}
+        format json
+        level {{ log.level }}
+    }
+
+    # Serve custom HTML website
+    file_server
+
+}
